@@ -1,6 +1,9 @@
 package com.niq.activate.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,6 +22,6 @@ public class Product {
     private String id;
     private String category;
     private String brand;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "shopperPersonalizedId.productId")
     private List<ShopperPersonalizedInfo> shopperPersonalizedInfoList;
 }

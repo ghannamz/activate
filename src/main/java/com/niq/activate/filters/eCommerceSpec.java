@@ -1,6 +1,7 @@
 package com.niq.activate.filters;
 
 import com.niq.activate.model.Product;
+import com.niq.activate.model.ShopperPersonalizedID;
 import com.niq.activate.model.ShopperPersonalizedInfo;
 import jakarta.persistence.criteria.Join;
 import org.springframework.data.jpa.domain.Specification;
@@ -19,16 +20,15 @@ public class eCommerceSpec {
 
     private static Specification<Product> hasShopperId(String shopperId) {
         return (root, query, cb) -> {
-            Join<ShopperPersonalizedInfo, Product> shoppers = root.join("shopperPersonalizedInfoList");
-            return cb.equal(shoppers.get("shopperPersonalizedId").get("shopperId"), shopperId);
+            Join<Product, ShopperPersonalizedInfo> firstJoin = root.join("shopperPersonalizedInfoList");
+            Join<ShopperPersonalizedInfo, ShopperPersonalizedID> secondJoin = firstJoin.join("shopperPersonalizedId");
+            return cb.equal(secondJoin.get("shopperId"), shopperId);
         };
     }
 
     public static Specification<Product> filterBy(String shopperId, String category, String brand) {
-//        return hasShopperId(shopperId)
-//                .and(hasCategory(category))
-//                .and(hasBrand(brand));
-        return hasCategory(category)
+        return hasShopperId(shopperId)
+                .and(hasCategory(category))
                 .and(hasBrand(brand));
     }
 }
