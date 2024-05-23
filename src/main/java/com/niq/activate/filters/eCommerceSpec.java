@@ -25,8 +25,10 @@ public class eCommerceSpec {
     }
 
     public static Specification<Product> filterBy(String shopperId, String category, String brand) {
-        return hasShopperId(shopperId)
-                .and(hasCategory(category))
+//        return hasShopperId(shopperId)
+//                .and(hasCategory(category))
+//                .and(hasBrand(brand));
+        return hasCategory(category)
                 .and(hasBrand(brand));
     }
 }

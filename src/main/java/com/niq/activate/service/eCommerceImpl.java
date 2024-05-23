@@ -28,7 +28,7 @@ public class eCommerceImpl implements eCommerce {
                                                       Integer limit) {
         log.info("Get products by shopper id: " + shopperId);
         Specification<Product> productSpecification = eCommerceSpec.filterBy(shopperId, category, brand);
-        Page<Product> products = productRepository.findAll(productSpecification, PageRequest.ofSize(limit));
+        Page<Product> products = productRepository.findAll(productSpecification, PageRequest.ofSize(limit > 100 ? 100 : limit));
         return MappingUtils.mapProductEntitiesToMetadata(products);
     }
 }
